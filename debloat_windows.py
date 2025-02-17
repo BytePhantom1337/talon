@@ -49,10 +49,10 @@ def download_file(url, save_path):
             log(f"Download attempt {attempt + 1} failed: {e}")
             time.sleep(3)
 
-    # If all attempts fail, show an error message and log the failure
-    error_message = f"Failed to download file from {url} after 3 attempts."
+    # If it can not download the file then it shows this
+    error_message = f"Failed to download file from {url} send your logs in the discord for help."
     log(error_message)
-    show_error_message(error_message)  # Use ctypes to show the error message
+    show_error_message(error_message)
     return False
 
 
@@ -95,6 +95,7 @@ def apply_registry_changes():
             (winreg.HKEY_CURRENT_USER, r"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "HideFileExt", winreg.REG_DWORD, 0),# Show file extensions in Explorer (useful for security and organization)
             (winreg.HKEY_CURRENT_USER, r"Control Panel\\Colors", "Hilight", winreg.REG_SZ, "0 0 0"), # Sets highlight color to black
             (winreg.HKEY_CURRENT_USER, r"Control Panel\\Colors", "HotTrackingColor", winreg.REG_SZ, "0 0 0"), # Sets the click-and-drag box color to black
+            (winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer", "DisableCopilot", winreg.REG_DWORD, 1), # Disable Copilot
         ]
         for root_key, key_path, value_name, value_type, value in registry_modifications:
             try:
